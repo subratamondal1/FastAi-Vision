@@ -1,6 +1,6 @@
 # FASTAI COMPUTER VISION
 
-## P1: 🐶🐱DEEP LEARNING PET CLASSIFIER FOR OXFORD-IIIT PET DATASET🐕🐈
+## P1: 🐶🐱DEEP LEARNING PET CLASSIFIER🐕🐈
 
 ### Project Description
 In this deep learning project, we have developed a sophisticated pet image classifier using the state-of-the-art Fastai framework. Our goal was to accurately classify pet images into 37 distinct categories, representing various breeds. We utilized the challenging Oxford-IIIT Pet Dataset, which contains a diverse set of pet images with complex variations in scale, pose, and lighting.
