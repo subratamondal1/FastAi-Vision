@@ -37,12 +37,22 @@ These meticulous data preparation steps ensure that the dataset is appropriately
 
 ### 4. Defining Learner (Model) & Learning Rate
 ---
-- **Mixed-Precision Training**: Enabling mixed-precision training using FastAi's `to_fp16()` method to optimize training by using lower-precision data types.
-- **Model Architecture**: Instantiating a vision learner with key parameters, including data loaders ('dls'), a ResNet-50 architecture ('arch=resnet50'), and utilizing a pre-trained model ('pretrained=True').
-- **Evaluation Metrics**: Equipping the learner with evaluation metrics such as accuracy and error rate for performance assessment.
-- **Learning Rate Finder**: Determining the optimal learning rate for model training using `learn.lr_find()`. The reported learning rate is within the range `slice(0.0001, 0.01, None)`, allowing adaptive learning rate adjustments during training.
+### 4. Defining Learner (Model) & Learning Rate
+---
+- **Transfer Learning with Pretrained Model**: Leveraging the power of transfer learning, we started with a pretrained model as the foundation of our Cat & Dog breed detector. Specifically, we used a ResNet-50 architecture that had been pretrained on the vast ImageNet dataset. This pretrained model had already learned to recognize a wide range of low-level features, such as edges, textures, and basic shapes, making it a valuable starting point for our specific task.
 
-These steps lay the foundational elements of our computer vision model, fine-tuning the architecture and defining the learning rate range for efficient and effective image classification.
+- **Mixed-Precision Training**: To optimize training efficiency, we employed mixed-precision training techniques using FastAi's `to_fp16()` method. This allowed us to use lower-precision data types during training, reducing memory consumption and speeding up the training process while maintaining model accuracy.
+
+- **Model Architecture**: Our learner (model) was instantiated with key parameters, including data loaders ('dls'), the ResNet-50 architecture ('arch=resnet50'), and the utilization of a pretrained model ('pretrained=True'). This pretrained model served as a feature extractor, preserving the knowledge it had gained from ImageNet.
+
+- **Fine-Tuning the Top Layers**: While the initial layers of the pretrained model were frozen (kept fixed), the top layers, responsible for higher-level feature extraction and classification, were trainable. This allowed our model to adapt its learned features to the specific task of classifying pet breeds.
+
+- **Evaluation Metrics**: To assess the model's performance, we equipped the learner with evaluation metrics, including accuracy and error rate.
+
+- **Learning Rate Finder**: To determine the optimal learning rate for our fine-tuning process, we used the `learn.lr_find()` method. The reported learning rate range, `slice(0.0001, 0.01, None)`, provided a suitable range for adaptive learning rate adjustments during training.
+
+These steps lay the foundation for our Cat & Dog breed detector, incorporating transfer learning to capitalize on the knowledge acquired by the pretrained model and adapt it to the nuances of pet breed classification.
+
 
 ### 5. Training & Saving the Model
 ---
@@ -150,7 +160,7 @@ These steps lay the foundational elements of our computer vision model, fine-tun
 5. **Training Time**: The training time for each epoch remains consistent in both models, approximately 1 minute and 26 seconds. Fine-tuning did not significantly impact the computational efficiency of the training process.
 
 ## Conclusion
-
+---
 In this Fastai computer vision project, we developed a highly sophisticated Cat & Dog breed detector using the state-of-the-art Fastai framework. Our goal was to accurately classify pet images into 37 distinct categories, representing various breeds, using the challenging Oxford-IIIT Pet Dataset.
 
 The project was structured into key phases, each contributing to the success of our computer vision model:
@@ -161,7 +171,7 @@ The project was structured into key phases, each contributing to the success of 
 
 3. **Create DataLoader**: Data loaders were created to efficiently load and batch the data for training and validation.
 
-4. **Define Learner (Model) & Learning Rate**: Our model architecture was defined, and an optimal learning rate range was determined.
+4. **Transfer Learning with Pretrained Model**: Leveraging the power of transfer learning, we started with a pretrained model as the foundation of our Cat & Dog breed detector. Specifically, we used a ResNet-50 architecture pretrained on the ImageNet dataset. This allowed us to harness the knowledge of the pretrained model to excel in our specific task.
 
 5. **Train & Save Model**: Our model underwent training for 10 epochs, achieving impressive accuracy and precision. The trained model was saved for future use.
 
