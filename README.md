@@ -1,13 +1,15 @@
-# FASTAI COMPUTER VISION
-
-# P1: 🐶🐱Cat & Dog breed detector🐕🐈
+# <center>🐶🐱Cat & Dog breed detector🐕🐈</center>
+---
 
 ## Project Description
+---
 In this deep learning project, we have developed a sophisticated Cat & Dog breed detector using the state-of-the-art Fastai framework. Our goal was to accurately classify pet images into 37 distinct categories, representing various breeds. We utilized the challenging Oxford-IIIT Pet Dataset, which contains a diverse set of pet images with complex variations in scale, pose, and lighting.
 
 ## FastAi Computer Vision Pipeline for Cat & Dog breed detector
+---
 
-### Load Data 
+### 1. Load Data 
+---
 - The project focuses on the [Oxford-IIIT Pet Dataset](https://www.robots.ox.ac.uk/~vgg/data/pets/), known for its 37 distinct pet categories and high-quality images.
 - Essential libraries, including FastAi, are imported to support the computer vision project.
 - The FastAi version used in this code is 2.7.12.
@@ -18,7 +20,8 @@ In this deep learning project, we have developed a sophisticated Cat & Dog breed
 - The code prints the total count of images in the dataset, which is 7390 images.
 - Additionally, it displays the file paths of the first 10 images in the dataset, providing a glimpse of the data's structure and location.
 
-### Data Preparation
+### 2. Data Preparation
+---
 - **Statistical Normalization**: The code imports essential statistics from the FastAi library, specifically, the `imagenet_stats`. These statistics are widely utilized for image data normalization, a fundamental step in preparing data for deep learning models.
 
 - **Image Augmentation and Cropping**: The code incorporates critical image transformation functions from FastAi, such as `aug_transforms` and `RandomResizedCrop`. These transformations are pivotal for introducing variability and robustness into the dataset, enhancing the model's ability to generalize from the training data to unseen examples.
@@ -29,7 +32,8 @@ In this deep learning project, we have developed a sophisticated Cat & Dog breed
 
 By executing these meticulously designed data preparation steps, the code ensures that the dataset is suitably conditioned for subsequent phases of the computer vision pipeline. This proactive approach to data preprocessing lays the groundwork for model training, validation, and evaluation, ultimately contributing to the success of the computer vision project.
 
-### Create DataLoader
+### 3. Create DataLoader
+---
 - **DataBlock Definition**: The core of the section lies in the creation of a DataBlock named 'pets.' This DataBlock orchestrates the entire data processing pipeline, defining key aspects such as the data blocks (Image and Category) to be employed, the method for acquiring image files, data splitting into training and validation sets using random splitting, and the extraction of category labels from file names using regular expressions.
 
 - **Item-Level and Batch-Level Transformations**: The DataBlock is configured with item-level and batch-level transformations, denoted as `item_tfms` and `batch_tfms`, respectively. These transformations, previously defined, ensure that each image and batch of data undergoes the prescribed operations, including resizing, cropping, augmentations, and normalization. This enhances the dataset's suitability for model training while maintaining consistency.
@@ -41,7 +45,8 @@ By executing these meticulously designed data preparation steps, the code ensure
 
 By executing these meticulously defined data processing steps, the "Create DataLoader" section ensures that the dataset is properly structured, labeled, and preprocessed for utilization in subsequent model development phases. The resulting data loaders stand as the conduit through which the model will access and learn from the prepared data.
 
-### Define Learner (Model) & Learning Rate
+### 4. Define Learner (Model) & Learning Rate
+---
 - **Mixed-Precision Training**: The code commences by enabling mixed-precision training using FastAi's `to_fp16()` method. This technique optimizes model training by using lower-precision data types, thus accelerating the training process while conserving memory.
 
 - **Model Architecture**: A vision learner is instantiated using FastAi's `vision_learner()`. The learner is configured with key parameters, including the data loaders (`dls`) for training and validation, a ResNet-50 architecture (`arch=resnet50`), and the utilization of a pre-trained model (`pretrained=True`). The choice of ResNet-50, a deep convolutional neural network, is noteworthy for its effectiveness in image classification tasks.
@@ -54,7 +59,8 @@ By executing these meticulously defined data processing steps, the "Create DataL
 
 By executing these pivotal steps, the "Define Learner(Model) & Learning Rate" section establishes the foundational elements of our computer vision model, fine-tuning the model architecture and defining the learning rate range. These choices are critical for successful model training, ensuring both efficiency and effectiveness in the pursuit of accurate image classification.
 
-### Train & Save Model
+### 5. Train & Save Model
+---
 | epoch | train_loss | valid_loss | accuracy | error_rate |  time  |
 |-------|------------|------------|----------|------------|--------|
 |   0   |  0.666741  |  0.321287  | 0.895129 |  0.104871  | 01:27  |
@@ -82,7 +88,7 @@ By executing these pivotal steps, the "Define Learner(Model) & Learning Rate" se
 
 This section serves as the crucible of our computer vision endeavor, where the model transforms from an initial state to a proficient classifier of pet breeds. The provided metrics underscore the model's remarkable progress, ultimately achieving impressive accuracy and precision. The saved model, 'model1_freezed,' becomes a valuable asset, ready for evaluation, deployment, and real-world applications.
 
-### Model Interpretation
+### 6. Model Interpretation
 **Top 10 Metrics from Classification Report**
 
 | Breed Category            | Precision | Recall | F1-Score |
@@ -148,10 +154,86 @@ This section serves as the crucible of our computer vision endeavor, where the m
     - **British_Shorthair** is often confused with **Russian_Blue**, with 5 occurrences.
     - **Beagle** and **Basset_Hound** are confused 5 times.
     - **Bengal** is sometimes mistaken for **Abyssinian**, with 4 instances.
+ 
+### 7. Unfreeze Model Layers, Fine Tune & Learning Rate
+**Previous Model Training (Freezed Layers)**
 
-### Conclusion
-This project showcases our proficiency in deep learning, data preprocessing, model training, and evaluation. The pet classifier we've developed delivers impressive results, accurately identifying pet breeds from a challenging dataset. Our pipeline can be adapted for various image classification tasks, and the model's ability to handle complex, real-world data demonstrates its practical utility.
+| Epoch | Train Loss | Valid Loss | Accuracy | Error Rate | Time   |
+|-------|------------|------------|----------|------------|--------|
+| 0     | 0.666741   | 0.321287   | 0.895129 | 0.104871   | 01:27  |
+| 1     | 0.496385   | 0.430292   | 0.875507 | 0.124493   | 01:26  |
+| 2     | 0.483526   | 0.561120   | 0.868065 | 0.131935   | 01:27  |
+| 3     | 0.375414   | 0.347090   | 0.908660 | 0.091340   | 01:28  |
+| 4     | 0.289794   | 0.372382   | 0.899188 | 0.100812   | 01:27  |
+| 5     | 0.215737   | 0.319737   | 0.920839 | 0.079161   | 01:25  |
+| 6     | 0.156200   | 0.319586   | 0.924899 | 0.075101   | 01:27  |
+| 7     | 0.110415   | 0.235808   | 0.936401 | 0.063599   | 01:27  |
+| 8     | 0.078930   | 0.260270   | 0.929635 | 0.070365   | 01:27  |
+| 9     | 0.065367   | 0.257863   | 0.934371 | 0.065629   | 01:26  |
 
-**Model Performance Metrics (After Fine-Tuning):**
-- Accuracy: Exceeding 94%
-- Error Rate: Remarkably low
+**Fine-Tuned Model (Unfreezed Layers)**
+
+| Epoch | Train Loss | Valid Loss | Accuracy | Error Rate | Time   |
+|-------|------------|------------|----------|------------|--------|
+| 0     | 0.057250   | 0.259445   | 0.929635 | 0.070365   | 01:26  |
+| 1     | 0.052452   | 0.261673   | 0.934371 | 0.065629   | 01:26  |
+| 2     | 0.043833   | 0.252830   | 0.935047 | 0.064953   | 01:25  |
+| 3     | 0.050001   | 0.279817   | 0.933694 | 0.066306   | 01:26  |
+| 4     | 0.044332   | 0.257765   | 0.932341 | 0.067659   | 01:26  |
+| 5     | 0.043266   | 0.263906   | 0.937077 | 0.062923   | 01:27  |
+| 6     | 0.043428   | 0.253806   | 0.934371 | 0.065629   | 01:28  |
+| 7     | 0.032019   | 0.250571   | 0.937754 | 0.062246   | 01:29  |
+| 8     | 0.035151   | 0.254164   | 0.936401 | 0.063599   | 01:14  |
+| 9     | 0.036221   | 0.245009   | 0.935047 | 0.064953   | 01:03  |
+
+**Comparison:**
+
+1. **Training Loss**: In the previous model with frozen layers, the training loss started at 0.667 and gradually decreased to 0.065 in 10 epochs. After unfreezing and fine-tuning, the training loss starts at 0.057 and ends at 0.036. The fine-tuned model exhibits lower training loss, indicating better convergence and learning.
+
+2. **Validation Loss**: Similar to training loss, validation loss also decreased from 0.321 to 0.258 in the previous model. In the fine-tuned model, it decreases from 0.259 to 0.245. The fine-tuned model maintains a lower validation loss, showing improved generalization.
+
+The fine-tuned model, however, starts with an accuracy of 92.9% and reaches 93.5%. While the difference is relatively small, it indicates a slight improvement in correctly classifying images.
+
+1. **Error Rate:** The error rate, inversely related to accuracy, improved from 10.5% to 6.6% in the previous model. In the fine-tuned model, it decreased from 7.0% to 6.5%. Although the change is modest, it demonstrates the fine-tuned model's enhanced precision in classifying pet breeds.
+
+2. **Training Time:** The training time for each epoch remains consistent in both models, approximately 1 minute and 26 seconds. Fine-tuning did not significantly impact the computational efficiency of the training process.
+
+## Conclusion
+---
+
+In this Fastai computer vision project, we embarked on a journey to develop a highly sophisticated Cat & Dog breed detector. Leveraging the powerful Fastai framework, we aimed to accurately classify pet images into 37 distinct categories, encompassing various breeds. Our dataset of choice was the challenging Oxford-IIIT Pet Dataset, known for its high-quality images and complex variations in scale, pose, and lighting.
+
+The project was structured into key phases, each contributing to the success of our computer vision model:
+
+## 1. Load Data
+We began by acquiring the Oxford-IIIT Pet Dataset, which consists of 7390 pet images representing 37 different breeds. This dataset was meticulously prepared for model training, ensuring that it was well-suited for deep learning tasks.
+
+## 2. Data Preparation
+Data preparation was a crucial step that involved statistical normalization, image augmentation, cropping, and item and batch-level transformations. These operations enhanced the dataset's diversity and robustness, facilitating better model generalization.
+
+## 3. Create DataLoader
+We created data loaders that efficiently loaded and batched the data for training and validation. These data loaders provided a structured conduit for our model to access and learn from the prepared data. Our dataset contained 5912 training images and 1478 validation images, spread across 37 distinct pet breeds.
+
+## 4. Define Learner (Model) & Learning Rate
+We defined our computer vision model, configuring it with essential parameters such as the data loaders, a ResNet-50 architecture, and the utilization of a pre-trained model. We also determined the optimal learning rate range for training, enabling efficient convergence.
+
+## 5. Train & Save Model
+The heart of our project lay in training our model. Over the course of 10 epochs, our model progressively learned and adapted to the pet breed classification task. We diligently tracked key performance metrics, including training loss, validation loss, accuracy, and error rate. The model's remarkable progress was highlighted through these metrics, culminating in impressive accuracy and precision. We also preserved the trained model for future evaluation, deployment, and real-world applications.
+
+## 6. Model Interpretation
+To gain insights into our model's performance, we conducted a comprehensive interpretation analysis. We examined the top 10 metrics from the classification report, which showcased precision, recall, and F1-score for each pet breed category. Additionally, we identified the top 10 most confused categories, shedding light on the specific breed pairs that our model found challenging to distinguish.
+
+## 7. Unfreeze Model Layers, Fine Tune & Learning Rate
+We revisited our model after freezing the layers and fine-tuned it by unfreezing them. Comparing the results, we observed noteworthy improvements:
+
+- **Training Loss**: The training loss improved from 0.667 to 0.057, indicating better convergence and learning in the fine-tuned model.
+
+- **Validation Loss**: The validation loss decreased from 0.321 to 0.259, highlighting improved generalization.
+
+- **Accuracy**: Although the difference was relatively small, the fine-tuned model exhibited a slight improvement in accuracy, starting at 92.9% and reaching 93.5%.
+
+- **Error Rate**: The error rate, inversely related to accuracy, decreased from 7.0% to 6.5% after fine-tuning, demonstrating enhanced precision.
+
+Our project exemplifies the power of Fastai in developing state-of-the-art computer vision models. Through meticulous data preparation, model definition, and iterative fine-tuning, we achieved remarkable accuracy in the challenging task of pet breed classification. The lessons learned and insights gained from this project can be applied to a wide range of computer vision applications, paving the way for further advancements in the field.
+
+Overall, fine-tuning the model by unfreezing layers led to marginal improvements in training loss, validation loss, accuracy, and error rate. These improvements suggest that fine-tuning helped the model further adapt to the dataset, resulting in slightly better performance.
